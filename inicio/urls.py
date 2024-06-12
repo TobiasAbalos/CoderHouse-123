@@ -11,5 +11,7 @@ urlpatterns = [
     path('autos/', views.autos, name='autos'),
     # path('autos/crear/<str:marca>/<str:modelo>', views.crear_auto, name='crear_auto'),
     path('autos/crear/', views.crear_auto_v2, name='crear_auto_v2'),
-    
+    path('autos/eliminar_auto/<int:id>', views.eliminar_auto, name='eliminar_auto'),
+    path('autos/ver_auto/<int:id>/', views.ver_auto, name='ver_auto'),
+    path('autos/editar_auto/<int:id>', views.editar_auto, name='editar_auto'),   
 ]

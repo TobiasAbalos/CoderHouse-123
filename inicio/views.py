@@ -6,7 +6,7 @@ from django.template import Template, Context, loader
 
 from inicio.models import Auto
 
-from inicio.forms import CrearAuto
+from inicio.forms import CrearAuto, BuscarAuto
 
 import random
 
@@ -114,6 +114,23 @@ def crear_auto_v2(request):
 
 def autos(request):
     
-    autos = Auto.objects.all()
+    formulario = BuscarAuto(request.GET)
+    if formulario.is_valid():
+        marca = formulario.cleaned_data['marca']
+        autos = Auto.objects.filter(marca__icontains=marca)
     
-    return render(request, 'inicio/autos.html', {'autos': autos})
+    # autos = Auto.objects.all()
+    
+    return render(request, 'inicio/autos.html', {'autos': autos, 'formulario': formulario})
+
+def eliminar_auto(request, id):
+    auto = Auto.objects.get(id=id)
+    auto.delete()
+    return redirect('autos')
+
+def editar_auto(request, id):
+    ...
+    
+def ver_auto(request, id):
+    auto = Auto.objects.get(id=id)
+    return render(request, 'inicio/ver_auto.html', {'auto': auto})
