@@ -6,7 +6,7 @@ from django.template import Template, Context, loader
 
 from inicio.models import Auto
 
-from inicio.forms import CrearAuto, BuscarAuto
+from inicio.forms import CrearAutoFormulario, BuscarAuto, EditarAutoFormulario
 
 import random
 
@@ -100,10 +100,10 @@ def crear_auto_v2(request):
     print('Valor de la GET: ', request.GET)
     print('Valor de la POST: ', request.POST)
     
-    formulario = CrearAuto()
+    formulario = CrearAutoFormulario()
     
     if request.method == 'POST':
-        formulario = CrearAuto(request.POST)
+        formulario = CrearAutoFormulario(request.POST)
         if formulario.is_valid():
             datos = formulario.cleaned_data
             auto = Auto(marca=datos.get('marca'), modelo=datos.get('modelo'))
@@ -129,7 +129,18 @@ def eliminar_auto(request, id):
     return redirect('autos')
 
 def editar_auto(request, id):
-    ...
+    auto = Auto.objects.get(id=id)
+    formulario = EditarAutoFormulario(initial={'marca': auto.marca , 'modelo' : auto.modelo})
+    if request.method == 'POST':
+        formulario = EditarAutoFormulario(request.POST)
+        if formulario.is_valid():
+            info = formulario.cleaned_data
+            auto.marca = info['marca']
+            auto.modelo = info['modelo']
+            auto.save()
+            return redirect('autos')
+        
+    return render(request, 'inicio/editar_auto.html', {'formulario' : formulario, 'auto' : auto})
     
 def ver_auto(request, id):
     auto = Auto.objects.get(id=id)

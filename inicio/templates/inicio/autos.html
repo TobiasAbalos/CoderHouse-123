@@ -10,6 +10,8 @@ Listado de autos
 
 {% block main %}
 
+<a href={% url "crear_auto_v2" %}>Crear Auto</a>
+
 <form action={% url "autos" %} method="get">
     {{formulario}}
     <input type="submit" value="Buscar">
