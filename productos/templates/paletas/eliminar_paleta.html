@@ -10,13 +10,12 @@ Eliminar Paleta
 
 {% block main %}
 
-<form action={% url "eliminar_paleta" paleta.id %} method="POST">
+<form action={% url 'eliminar_paleta' paleta.id%} method="POST">
     {% csrf_token %}
     <p>
         Desea confirmar el borrado de la paleta {{paleta}}?
     </p>
     <input type="submit" value="Confirmar borrado">
-
 </form>
 
 {% endblock main %}

@@ -31,5 +31,5 @@ class VerPaleta(DetailView):
 class EliminarPaleta(DeleteView):
     model = Paleta
     template_name = "paletas/eliminar_paleta.html"
-    succes_url = reverse_lazy('paletas')
+    success_url = reverse_lazy('paletas')
     
